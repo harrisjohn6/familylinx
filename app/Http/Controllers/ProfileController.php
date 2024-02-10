@@ -36,17 +36,20 @@ class ProfileController extends Controller
      */
     public function update(ProfileUpdateRequest $request): RedirectResponse
     {
-        Log::info('RequestData', $request->all());
+
+        Log::info('Before Validation $request', $request->all());
         $validatedData = $request->validated();  // Get all your validated data at once
-        Log::info('Validated data after validation:', $validatedData);
+        Log::info('After Validation $validatedData', $validatedData);
+
 
 
         $request->user()->fill($validatedData);  // Update user data
+        Log::info('After user Fill', $validatedData);
 
         if ($request->user()->isDirty('email')) {
             $request->user()->email_verified_at = null;
         }
-        Log::info('Validated data:', $validatedData);
+
         $request->user()->save();
 
         return Redirect::route('profile.edit')->with('status', 'profile-updated');

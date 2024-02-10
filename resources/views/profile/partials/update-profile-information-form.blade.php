@@ -33,7 +33,7 @@
 
         <div>
             <x-input-label for="gender_id" :value="__('Gender Identity')" />
-            <select name="user[gender_id]" id="gender_id" class="mt-1 block w-full" required autofocus>
+            <select name="gender_id" id="gender_id" class="mt-1 block w-full" required autofocus>
                 <option value="">Select Gender Identity</option>
                 @foreach ($genders as $gender)
                     <option value="{{ $gender->gender_id }}"
@@ -45,10 +45,8 @@
             <x-input-error class="mt-2" :messages="$errors->get('gender_identity')" />
         </div>
 
-
-
         <div class="mt-4"> <x-input-label for="biological_sex" :value="__('Biological Sex (Optional)')" />
-            <select id="biological_sex" name="user[biological_sex]"  class="mt-1 block w-full">
+            <select id="biological_sex" name="biological_sex"  class="mt-1 block w-full">
                 <option value="">Select</option>
                 <option value="Male" {{ old('biological_sex', $user->biological_sex) == 'Male' ? 'selected' : '' }}>
                     Male</option>

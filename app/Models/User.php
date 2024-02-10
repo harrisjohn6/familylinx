@@ -22,7 +22,7 @@ class User extends Authenticatable
         'email',
         'password',
         'date_birth',
-        'gender_id,',
+        'gender_id',
         'biological_sex',
         'address_line_1',
         'address_line_2',
