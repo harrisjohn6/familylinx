@@ -11,6 +11,7 @@ use Illuminate\View\View;
 use App\Models\Gender;
 use Faker\Provider\bg_BG\PhoneNumber;
 use APP\Models\Relationship;
+use Illuminate\Support\Facades\Log;
 
 class ProfileController extends Controller
 {
@@ -35,14 +36,17 @@ class ProfileController extends Controller
      */
     public function update(ProfileUpdateRequest $request): RedirectResponse
     {
+        Log::info('RequestData', $request->all());
         $validatedData = $request->validated();  // Get all your validated data at once
+        Log::info('Validated data after validation:', $validatedData);
+
 
         $request->user()->fill($validatedData);  // Update user data
 
         if ($request->user()->isDirty('email')) {
             $request->user()->email_verified_at = null;
         }
-
+        Log::info('Validated data:', $validatedData);
         $request->user()->save();
 
         return Redirect::route('profile.edit')->with('status', 'profile-updated');

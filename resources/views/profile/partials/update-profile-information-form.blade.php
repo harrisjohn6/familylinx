@@ -42,14 +42,13 @@
                     </option>
                 @endforeach
             </select>
-            <option value="other">Other</option>
-            </select>
             <x-input-error class="mt-2" :messages="$errors->get('gender_identity')" />
         </div>
 
 
+
         <div class="mt-4"> <x-input-label for="biological_sex" :value="__('Biological Sex (Optional)')" />
-            <select name="user[biological_sex]" id="biological_sex" class="mt-1 block w-full">
+            <select id="biological_sex" name="user[biological_sex]"  class="mt-1 block w-full">
                 <option value="">Select</option>
                 <option value="Male" {{ old('biological_sex', $user->biological_sex) == 'Male' ? 'selected' : '' }}>
                     Male</option>
@@ -62,7 +61,6 @@
             </select>
             <x-input-error class="mt-2" :messages="$errors->get('biological_sex')" />
         </div>
-
 
         <div>
             <x-input-label for="address_line_1" :value="__('Address Line 1')" />
@@ -99,24 +97,23 @@
             <x-input-error class="mt-2" :messages="$errors->get('zip_code')" />
         </div>
 
+
+        <div>
+            <x-input-label for="phone_type" :value="__('Phone Type')" />
+            <select id="phone_type" name="phone_type" class="mt-1 block w-full" required>
+                <option value="mobile" {{ $user->phone_type === 'mobile' ? 'selected' : '' }}>Mobile</option>
+                <option value="home" {{ $user->phone_type === 'home' ? 'selected' : '' }}>Home</option>
+                <option value="work" {{ $user->phone_type === 'work' ? 'selected' : '' }}>Work</option>
+                <option value="other" {{ $user->phone_type === 'other' ? 'selected' : '' }}>Other</option>
+            </select>
+            <x-input-error class="mt-2" :messages="$errors->get('phone_type')" />
+        </div>
+
         <div>
             <x-input-label for="phone_number" :value="__('Phone Number')" />
             <x-text-input id="phone_number" name="phone_number" type="tel" class="mt-1 block w-full"
                 :value="old('phone_number', $user->phone_number)" required />
             <x-input-error class="mt-2" :messages="$errors->get('phone_number')" />
-        </div>
-
-        <div>
-            <x-input-label for="phone_type" :value="__('Phone Type')" />
-            <select id="phone_type" name="phone_type" class="mt-1 block w-full"
-                :value="old('phone_type', $user - > phone_type)" required>
-                <option value="mobile" selected="{{ old('phone_type', $user->phone_type) === 'mobile' }}">Mobile
-                </option>
-                <option value="home" selected="{{ old('phone_type', $user->phone_type) === 'home' }}">Home</option>
-                <option value="work" selected="{{ old('phone_type', $user->phone_type) === 'work' }}">Work</option>
-                <option value="other" selected="{{ old('phone_type', $user->phone_type) === 'other' }}">Other</option>
-            </select>
-            <x-input-error class="mt-2" :messages="$errors->get('phone_type')" />
         </div>
 
         <div>

@@ -22,12 +22,15 @@ class User extends Authenticatable
         'email',
         'password',
         'date_birth',
+        'gender_id,',
+        'biological_sex',
         'address_line_1',
         'address_line_2',
         'city',
         'state',
         'zip_code',
         'phone_number',
+        'phone_type',
 
     ];
 

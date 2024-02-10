@@ -11,15 +11,15 @@ class GendersTableSeeder extends Seeder
     {
 
         $data = [
-            ['gender' => 'Female'],
-            ['gender' => 'Male'],
-            ['gender' => 'Non-binary'],
-            ['gender' => 'Genderqueer'],
-            ['gender' => 'Agender'],
-            ['gender' => 'Genderfluid'],
-            ['gender' => 'Transgender'],
-            ['gender' => 'Prefer not to say'],
-            ['gender' => 'Other'],
+            ['gender_identity' => 'Female'],
+            ['gender_identity' => 'Male'],
+            ['gender_identity' => 'Non-binary'],
+            ['gender_identity' => 'Genderqueer'],
+            ['gender_identity' => 'Agender'],
+            ['gender_identity' => 'Genderfluid'],
+            ['gender_identity' => 'Transgender'],
+            ['gender_identity' => 'Prefer not to say'],
+            ['gender_identity' => 'Other'],
         ];
 
         DB::table('genders')->insert($data);
