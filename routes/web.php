@@ -1,9 +1,12 @@
 <?php
 
+use App\Http\Controllers\ProfilePhotoController;
+use App\Http\Controllers\Auth\RegisteredUserController;
+use App\Http\Controllers\InviteFamilyController;
 use App\Http\Controllers\ProfileController;
+use App\Http\Controllers\FamilyTreeController;
 use Illuminate\Support\Facades\Auth;
 use Illuminate\Support\Facades\Route;
-
 
 /*
 |--------------------------------------------------------------------------
@@ -28,6 +31,12 @@ Route::middleware('auth')->group(function () {
     Route::get('/profile', [ProfileController::class, 'edit'])->name('profile.edit');
     Route::patch('/profile', [ProfileController::class, 'update'])->name('profile.update');
     Route::delete('/profile', [ProfileController::class, 'destroy'])->name('profile.destroy');
+
+    Route::get('/invite-family', [InviteFamilyController::class, 'create'])->name('invite-family');
+    Route::patch('/invite/family', [InviteFamilyController::class, 'sendInvite'])->name('invite-family.send');
+    Route::get('/family-tree', [FamilyTreeController::class,'buildFamilyTree']);
 });
+
+Route::patch('/profile/photo', [ProfilePhotoController::class, 'update'])->name('profile.photo');
 
 require __DIR__ . '/auth.php';

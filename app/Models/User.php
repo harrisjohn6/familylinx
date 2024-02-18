@@ -31,6 +31,8 @@ class User extends Authenticatable
         'zip_code',
         'phone_number',
         'phone_type',
+        'profile_photo',
+        'is_registered',
 
     ];
 
@@ -62,5 +64,10 @@ class User extends Authenticatable
     public function links()
     {
         return $this->hasMany(Link::class);
+    }
+
+    public function createSymUser($symUser)
+    {
+
     }
 }
