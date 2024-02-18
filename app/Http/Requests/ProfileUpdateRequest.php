@@ -28,7 +28,6 @@ class ProfileUpdateRequest extends FormRequest
             'zip_code'=>['string'],
             'phone_number'=> ['string'],
             'phone_type'=> ['string'],
-
         ];
     }
 }

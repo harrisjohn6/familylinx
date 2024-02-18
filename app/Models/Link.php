@@ -13,22 +13,28 @@ class Link extends Model
         'user_id_1',
         'user_id_2',
         'relationship_type_id',
-        'start_date',
+        'created_at',
+        'updated_at',
         'is_biological',
     ];
 
-    public function user()
+    public function user1() // More descriptive name
     {
-        return $this->belongsTo(User::class);
+        return $this->belongsTo(User::class, 'user_id_1');
     }
 
-    public function relatedUser()
+    public function user2() // Either user_id_1 or user_id_2 can be the 'related' one
     {
-        return $this->belongsTo(User::class, 'related_user_id');
+        return $this->belongsTo(User::class, 'user_id_2');
     }
 
     public function relationship()
     {
-        return $this->belongsTo(Relationship::class);
+        return $this->belongsTo(Relationship::class, 'relationship_type_id');
     }
+
+
+
+
+
 }

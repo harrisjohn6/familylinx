@@ -46,7 +46,7 @@
         </div>
 
         <div class="mt-4"> <x-input-label for="biological_sex" :value="__('Biological Sex (Optional)')" />
-            <select id="biological_sex" name="biological_sex"  class="mt-1 block w-full">
+            <select id="biological_sex" name="biological_sex" class="mt-1 block w-full">
                 <option value="">Select</option>
                 <option value="Male" {{ old('biological_sex', $user->biological_sex) == 'Male' ? 'selected' : '' }}>
                     Male</option>
