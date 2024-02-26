@@ -16,6 +16,14 @@
                         {{ __('Dashboard') }}
                     </x-nav-link>
 
+                    <x-nav-link :href="route('family-tree')" :active="request()->routeIs('family-tree')">
+                        {{ __('Family Tree') }}
+                    </x-nav-link>
+
+                    <x-nav-link :href="route('go-family-tree')" :active="request()->routeIs('go-family-tree')">
+                        {{ __('Go Family Tree') }}
+                    </x-nav-link>
+
                     <x-nav-link :href="route('invite-family')" :active="request()->routeIs('invite-family')">
                         {{ __('Invite Family') }}
                     </x-nav-link>

@@ -2,27 +2,32 @@
 
 namespace App\Http\Controllers;
 
-use App\Http\Requests\ProfileUpdateRequest;
-use Illuminate\Http\RedirectResponse;
-use Illuminate\Http\Request;
-use Illuminate\Support\Facades\Auth;
-use Illuminate\Support\Facades\Redirect;
-use Illuminate\View\View;
 use App\Models\Gender;
-use Faker\Provider\bg_BG\PhoneNumber;
+use Illuminate\View\View;
 use APP\Models\Relationship;
+use Illuminate\Http\Request;
+use App\Services\ProfileService;
 use Illuminate\Support\Facades\Log;
+use Illuminate\Support\Facades\Auth;
+use Faker\Provider\bg_BG\PhoneNumber;
+use Illuminate\Http\RedirectResponse;
+use Illuminate\Support\Facades\Redirect;
+use App\Http\Requests\ProfileUpdateRequest;
 
 class ProfileController extends Controller
 {
+    private $profileService;
+
+    public function __construct(ProfileService $profileService)
+    {
+        $this->profileService = $profileService;
+    }
     /**
      * Display the user's profile form.
      */
     public function edit(Request $request): View
     {
-        // Fetch data and prepare an array for both gender identity and biological sex
-        $genders = Gender::select('gender_id', 'gender_identity')->get();
-
+        $genders = $this->profileService->getGenders();
         // Pass 'genders' to the view
         return view('profile.edit', [
             'genders' => $genders,
@@ -37,14 +42,9 @@ class ProfileController extends Controller
     public function update(ProfileUpdateRequest $request): RedirectResponse
     {
 
-        Log::info('Before Validation $request', $request->all());
+
         $validatedData = $request->validated();  // Get all your validated data at once
-        Log::info('After Validation $validatedData', $validatedData);
-
-
-
         $request->user()->fill($validatedData);  // Update user data
-        Log::info('After user Fill', $validatedData);
 
         if ($request->user()->isDirty('email')) {
             $request->user()->email_verified_at = null;

@@ -23,7 +23,9 @@ class InviteFamilyRequest extends FormRequest
     {
         return [
             'inviteEmail' => 'email|required',
-            'inviteName' => 'string|required',
+            'inviteNameFirst' => 'string|nullable',
+            'inviteNameLast' => 'string|nullable',
+            'inviteNameMiddle' => 'string|nullable',
             'inviteDateBirth' => 'date|nullable',
             'inviteBiologicalSex' => 'string|nullable',
             'inviteRelationshipId' => 'integer|required',
