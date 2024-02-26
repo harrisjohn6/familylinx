@@ -23,7 +23,7 @@ class UpdateProfilePhotoRequest extends FormRequest
     {
 
         return [
-            'profile_photo' => 'required|image',
+            'profilePhoto' => 'required|image',
         ];
     }
 }

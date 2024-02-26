@@ -25,10 +25,24 @@
             </div>
 
             <div>
-                <x-input-label for="inviteName" :value="__('Name')" />
-                <x-text-input id="inviteName" name="inviteName" type="text" class="mt-1 block w-full"
-                    :value="old('inviteName')" required autofocus autocomplete="inviteName" />
-                <x-input-error class="mt-2" :messages="$errors->get('inviteName')" />
+                <x-input-label for="inviteNameFirst" :value="__('First Name')" />
+                <x-text-input id="inviteNameFirst" name="inviteNameFirst" type="text" class="mt-1 block w-full"
+                    :value="old('inviteNameFirst')" required autofocus autocomplete="inviteNameFirst" />
+                <x-input-error class="mt-2" :messages="$errors->get('inviteNameFirst')" />
+            </div>
+
+            <div>
+                <x-input-label for="inviteNameMiddle" :value="__('Middle Name')" />
+                <x-text-input id="inviteNameMiddle" name="inviteNameMiddle" type="text" class="mt-1 block w-full"
+                    :value="old('inviteNameMiddle')" autofocus autocomplete="inviteNameMiddle" />
+                <x-input-error class="mt-2" :messages="$errors->get('inviteNameMiddle')" />
+            </div>
+
+            <div>
+                <x-input-label for="inviteNameLast" :value="__('Last Name')" />
+                <x-text-input id="inviteNameLast" name="inviteNameLast" type="text" class="mt-1 block w-full"
+                    :value="old('inviteNameLast')" required autofocus autocomplete="inviteNameLast" />
+                <x-input-error class="mt-2" :messages="$errors->get('inviteNameLast')" />
             </div>
 
             <div>
@@ -60,7 +74,7 @@
                     <option value="">Select relationship Identity</option>
                     @foreach ($relationships as $relationship)
                         <option value="{{ $relationship->id }}"
-                            {{ $relationship->id == $relationship->relationship_title? 'selected' : '' }}>
+                            {{ $relationship->id == $relationship->relationship_title ? 'selected' : '' }}>
                             {{ $relationship->relationship_title }}
                         </option>
                     @endforeach

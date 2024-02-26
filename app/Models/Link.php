@@ -16,6 +16,8 @@ class Link extends Model
         'created_at',
         'updated_at',
         'is_biological',
+        'isParent',
+        'isSibling',
     ];
 
     public function user1() // More descriptive name

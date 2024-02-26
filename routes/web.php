@@ -1,12 +1,13 @@
 <?php
 
-use App\Http\Controllers\ProfilePhotoController;
-use App\Http\Controllers\Auth\RegisteredUserController;
-use App\Http\Controllers\InviteFamilyController;
-use App\Http\Controllers\ProfileController;
-use App\Http\Controllers\FamilyTreeController;
+use App\Http\Controllers\Controller;
 use Illuminate\Support\Facades\Auth;
 use Illuminate\Support\Facades\Route;
+use App\Http\Controllers\ProfileController;
+use App\Http\Controllers\FamilyTreeController;
+use App\Http\Controllers\InviteFamilyController;
+use App\Http\Controllers\ProfilePhotoController;
+use App\Http\Controllers\Auth\RegisteredUserController;
 
 /*
 |--------------------------------------------------------------------------
@@ -32,11 +33,14 @@ Route::middleware('auth')->group(function () {
     Route::patch('/profile', [ProfileController::class, 'update'])->name('profile.update');
     Route::delete('/profile', [ProfileController::class, 'destroy'])->name('profile.destroy');
 
-    Route::get('/invite-family', [InviteFamilyController::class, 'create'])->name('invite-family');
-    Route::patch('/invite/family', [InviteFamilyController::class, 'sendInvite'])->name('invite-family.send');
-    Route::get('/family-tree', [FamilyTreeController::class,'buildFamilyTree']);
+    Route::get('/invite-family', [InviteFamilyController::class, 'getInviteForm'])->name('invite-family');
+    Route::patch('/invite/family', [InviteFamilyController::class, 'postSendInvite'])->name('invite-family.send');
+    Route::get('/family-tree', [FamilyTreeController::class, 'getFamilyTree'])->name('family-tree');
+    Route::get('/go-family-tree', [FamilyTreeController::class, 'getGoJsFamilyTree'])->name('go-family-tree');
 });
 
 Route::patch('/profile/photo', [ProfilePhotoController::class, 'update'])->name('profile.photo');
+
+Route::get('/birthdays', [Controller::class, 'getBirthdays'])->middleware('auth');
 
 require __DIR__ . '/auth.php';

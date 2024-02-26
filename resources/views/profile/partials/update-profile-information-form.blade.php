@@ -18,26 +18,55 @@
         @method('patch')
 
         <div>
-            <x-input-label for="name" :value="__('Name')" />
-            <x-text-input id="name" name="name" type="text" class="mt-1 block w-full" :value="old('name', $user->name)"
-                required autofocus autocomplete="name" />
-            <x-input-error class="mt-2" :messages="$errors->get('name')" />
+            <x-input-label for="prefix" :value="__('Prefix')" />
+            <x-text-input id="prefix" name="prefix" type="text" class="mt-1 block w-full" :value="old('prefix', $user->prefix)"
+                autofocus autocomplete="name" />
+            <x-input-error class="mt-2" :messages="$errors->get('prefix')" />
         </div>
 
         <div>
-            <x-input-label for="date_birth" :value="__('Birth Date')" />
-            <x-text-input id="date_birth" name="date_birth" type="date" class="mt-1 blovk w-full" :value="old('date_birth', $user->date_birth)"
-                required autofocus autocomplete="date_birth" />
-            <x-input-error class="mt-2" :messages="$errors->get('date_birth')" />
+            <x-input-label for="nameFirst" :value="__('First Name')" />
+            <x-text-input id="nameFirst" name="nameFirst" type="text" class="mt-1 block w-full" :value="old('nameFirst', $user->nameFirst)"
+                autofocus autocomplete="nameFirst" />
+            <x-input-error class="mt-2" :messages="$errors->get('nameFirst')" />
         </div>
 
         <div>
-            <x-input-label for="gender_id" :value="__('Gender Identity')" />
-            <select name="gender_id" id="gender_id" class="mt-1 block w-full" required autofocus>
+            <x-input-label for="nameMiddle" :value="__('Middle Name')" />
+            <x-text-input id="nameMiddle" name="nameMiddle" type="text" class="mt-1 block w-full" :value="old('nameMiddle', $user->nameMiddle)"
+                autofocus autocomplete="nameMiddle" />
+            <x-input-error class="mt-2" :messages="$errors->get('nameMiddle')" />
+        </div>
+
+        <div>
+            <x-input-label for="nameLast" :value="__('Last Name')" />
+            <x-text-input id="nameLast" name="nameLast" type="text" class="mt-1 block w-full" :value="old('nameLast', $user->nameLast)"
+                autofocus autocomplete="nameLast" />
+            <x-input-error class="mt-2" :messages="$errors->get('nameLast')" />
+        </div>
+
+
+        <div>
+            <x-input-label for="suffix" :value="__('Suffix')" />
+            <x-text-input id="suffix" name="suffix" type="text" class="mt-1 block w-full" :value="old('suffix', $user->suffix)"
+                autofocus autocomplete="suffix" />
+            <x-input-error class="mt-2" :messages="$errors->get('suffix')" />
+        </div>
+
+        <div>
+            <x-input-label for="dateBirth" :value="__('Birth Date')" />
+            <x-text-input id="dateBirth" name="dateBirth" type="date" class="mt-1 blovk w-full" :value="old('dateBirth', $user->dateBirth)"
+                required autofocus autocomplete="dateBirth" />
+            <x-input-error class="mt-2" :messages="$errors->get('dateBirth')" />
+        </div>
+
+        <div>
+            <x-input-label for="genderId" :value="__('Gender Identity')" />
+            <select name="genderId" id="genderId" class="mt-1 block w-full" required autofocus>
                 <option value="">Select Gender Identity</option>
                 @foreach ($genders as $gender)
                     <option value="{{ $gender->gender_id }}"
-                        {{ $user->gender_id == $gender->gender_id ? 'selected' : '' }}>
+                        {{ $user->genderId == $gender->gender_id ? 'selected' : '' }}>
                         {{ $gender->gender_identity }}
                     </option>
                 @endforeach
@@ -45,33 +74,33 @@
             <x-input-error class="mt-2" :messages="$errors->get('gender_identity')" />
         </div>
 
-        <div class="mt-4"> <x-input-label for="biological_sex" :value="__('Biological Sex (Optional)')" />
-            <select id="biological_sex" name="biological_sex" class="mt-1 block w-full">
+        <div class="mt-4"> <x-input-label for="biologicalSex" :value="__('Biological Sex (Optional)')" />
+            <select id="biologicalSex" name="biologicalSex" class="mt-1 block w-full">
                 <option value="">Select</option>
-                <option value="Male" {{ old('biological_sex', $user->biological_sex) == 'Male' ? 'selected' : '' }}>
+                <option value="Male" {{ old('biologicalSex', $user->biologicalSex) == 'Male' ? 'selected' : '' }}>
                     Male</option>
-                <option value="Female" {{ old('biological_sex', $user->biological_sex) == 'Female' ? 'selected' : '' }}>
+                <option value="Female" {{ old('biologicalSex', $user->biologicalSex) == 'Female' ? 'selected' : '' }}>
                     Female</option>
                 <option value="Intersex"
-                    {{ old('biological_sex', $user->biological_sex) == 'Intersex' ? 'selected' : '' }}>Intersex</option>
+                    {{ old('biologicalSex', $user->biologicalSex) == 'Intersex' ? 'selected' : '' }}>Intersex</option>
                 <option value="Unknown"
-                    {{ old('biological_sex', $user->biological_sex) == 'Unknown' ? 'selected' : '' }}>Unknown</option>
+                    {{ old('biologicalSex', $user->biologicalSex) == 'Unknown' ? 'selected' : '' }}>Unknown</option>
             </select>
-            <x-input-error class="mt-2" :messages="$errors->get('biological_sex')" />
+            <x-input-error class="mt-2" :messages="$errors->get('biologicalSex')" />
         </div>
 
         <div>
-            <x-input-label for="address_line_1" :value="__('Address Line 1')" />
-            <x-text-input id="address_line_1" name="address_line_1" type="text" class="mt-1 block w-full"
-                :value="old('address_line_1', $user->address_line_1)" required />
-            <x-input-error class="mt-2" :messages="$errors->get('address_line_1')" />
+            <x-input-label for="addressLine1" :value="__('Address Line 1')" />
+            <x-text-input id="addressLine1" name="addressLine1" type="text" class="mt-1 block w-full"
+                :value="old('addressLine1', $user->addressLine1)" required />
+            <x-input-error class="mt-2" :messages="$errors->get('addressLine1')" />
         </div>
 
         <div>
-            <x-input-label for="address_line_2" :value="__('Address Line 2 (Optional)')" />
-            <x-text-input id="address_line_2" name="address_line_2" type="text" class="mt-1 block w-full"
-                :value="old('address_line_2', $user->address_line_2)" />
-            <x-input-error class="mt-2" :messages="$errors->get('address_line_2')" />
+            <x-input-label for="addressLine2" :value="__('Address Line 2 (Optional)')" />
+            <x-text-input id="addressLine2" name="addressLine2" type="text" class="mt-1 block w-full"
+                :value="old('addressLine2', $user->addressLine2)" />
+            <x-input-error class="mt-2" :messages="$errors->get('addressLine2')" />
         </div>
 
         <div>
@@ -89,29 +118,29 @@
         </div>
 
         <div>
-            <x-input-label for="zip_code" :value="__('Zip Code')" />
-            <x-text-input id="zip_code" name="zip_code" type="text" class="mt-1 block w-full" :value="old('zip_code', $user->zip_code)"
+            <x-input-label for="zip" :value="__('Zip Code')" />
+            <x-text-input id="zip" name="zip" type="text" class="mt-1 block w-full" :value="old('zip', $user->zip)"
                 required />
-            <x-input-error class="mt-2" :messages="$errors->get('zip_code')" />
+            <x-input-error class="mt-2" :messages="$errors->get('zip')" />
         </div>
 
 
         <div>
-            <x-input-label for="phone_type" :value="__('Phone Type')" />
-            <select id="phone_type" name="phone_type" class="mt-1 block w-full" required>
-                <option value="mobile" {{ $user->phone_type === 'mobile' ? 'selected' : '' }}>Mobile</option>
-                <option value="home" {{ $user->phone_type === 'home' ? 'selected' : '' }}>Home</option>
-                <option value="work" {{ $user->phone_type === 'work' ? 'selected' : '' }}>Work</option>
-                <option value="other" {{ $user->phone_type === 'other' ? 'selected' : '' }}>Other</option>
+            <x-input-label for="phoneType" :value="__('Phone Type')" />
+            <select id="phoneType" name="phoneType" class="mt-1 block w-full" required>
+                <option value="mobile" {{ $user->phoneType === 'mobile' ? 'selected' : '' }}>Mobile</option>
+                <option value="home" {{ $user->phoneType === 'home' ? 'selected' : '' }}>Home</option>
+                <option value="work" {{ $user->phoneType === 'work' ? 'selected' : '' }}>Work</option>
+                <option value="other" {{ $user->phoneType === 'other' ? 'selected' : '' }}>Other</option>
             </select>
-            <x-input-error class="mt-2" :messages="$errors->get('phone_type')" />
+            <x-input-error class="mt-2" :messages="$errors->get('phoneType')" />
         </div>
 
         <div>
-            <x-input-label for="phone_number" :value="__('Phone Number')" />
-            <x-text-input id="phone_number" name="phone_number" type="tel" class="mt-1 block w-full"
-                :value="old('phone_number', $user->phone_number)" required />
-            <x-input-error class="mt-2" :messages="$errors->get('phone_number')" />
+            <x-input-label for="phoneNumber" :value="__('Phone Number')" />
+            <x-text-input id="phoneNumber" name="phoneNumber" type="tel" class="mt-1 block w-full"
+                :value="old('phoneNumber', $user->phoneNumber)" required />
+            <x-input-error class="mt-2" :messages="$errors->get('phoneNumber')" />
         </div>
 
         <div>
