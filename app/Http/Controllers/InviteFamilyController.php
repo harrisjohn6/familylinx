@@ -7,18 +7,21 @@ use App\Services\FamilyTreeService;
 use Illuminate\Support\Facades\Auth;
 use App\Services\InviteFamilyService;
 use App\Http\Requests\InviteFamilyRequest;
+use App\Services\BaseService;
 
 class InviteFamilyController extends Controller
 {
     private $inviteFamilySerivce;
     private $relationship;
     private $familyTreeService;
+    private $baseService;
 
-    public function __construct(InviteFamilyService $inviteFamilySerivce, Relationship $relationship, FamilyTreeService $familyTreeService)
+    public function __construct(InviteFamilyService $inviteFamilySerivce, Relationship $relationship, FamilyTreeService $familyTreeService, BaseService $baseService)
     {
         $this->inviteFamilySerivce = $inviteFamilySerivce;
         $this->relationship = $relationship;
         $this->familyTreeService = $familyTreeService;
+        $this->baseService = $baseService;
     }
 
 
@@ -26,7 +29,7 @@ class InviteFamilyController extends Controller
 
     public function getInviteForm()
     {
-        $relationships = $this->relationship->all();
+        $relationships = $this->baseService->getRelationships();
         return view("invite-family-form", compact("relationships"));
     }
 

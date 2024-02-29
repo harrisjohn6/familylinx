@@ -29,6 +29,7 @@ class InviteFamilyRequest extends FormRequest
             'inviteDateBirth' => 'date|nullable',
             'inviteBiologicalSex' => 'string|nullable',
             'inviteRelationshipId' => 'integer|required',
+            'addedFromFamilyId' => 'nullable|integer',
         ];
     }
 }

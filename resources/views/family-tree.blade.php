@@ -4,6 +4,13 @@
             <h2 class="font-semibold text-xl text-gray-800 dark:text-gray-200 leading-tight">
                 {{ __('Family Tree') }}
             </h2>
+
+            <head>
+                <style>
+                    /* Style your menu as needed */
+                </style>
+            </head>
+
         </x-slot>
         @csrf
 
@@ -13,15 +20,18 @@
             </div>
         @endif
 
-        <div id="familyTree">
-        </div>
+        <div id="familyTree"></div>
+
         <script src="https://unpkg.com/vis-network/dist/vis-network.min.js"></script>
 
         <script>
+            const rootNodeId = {{ auth()->user()->id }};
+
             var nodes = new vis.DataSet(@json($nodes)); //
             var edges = new vis.DataSet(@json($edges));
 
             var container = document.getElementById('familyTree');
+
             var data = {
                 nodes: nodes,
                 edges: edges
@@ -33,7 +43,8 @@
                     size: 50 // Adjust image size
                 },
                 layout: {
-                    hierarchical: false
+                    hierarchical: false,
+
                 },
                 physics: {
                     enabled: true,
@@ -43,23 +54,21 @@
                         centralGravity: 0.2, // Adjust as desired
                     }
                 },
+                edges: {
+                    dashes: true,
+                }
             };
-
-            // Simple options to get started
-            const rootNodeId = {{ auth()->user()->id }};
 
             var network = new vis.Network(container, data, options);
             network.on('stabilized', function() {
                 console.log('Layout Stabilized!')
                 // Identify and Group Parent Pairs
                 nodes.forEach(function(node) {
-                    if (node.isParent) {
+                    if (!node.isParent) {
                         var parents = findParents(node.id);
-                        if (parents && parents.length === 2) {
+                        if (parents && parents.length >= 2) {
                             var clusterId = parents[0].id + '-' + parents[1].id;
-                            groupNodes(clusterId, [node.id, parents[0].id, parents[1]
-                                .id
-                            ]); // Assuming nodes have an ID field
+                            groupNodes(clusterId, [parents[0].id, parents[1].id]);
                         }
                     }
                 });
@@ -76,7 +85,12 @@
                         }
                     }
                 });
-                console.log('Parents:', parents)
+                console.log('linkedUserId'.linkedUserId);
+                console.log('Parent(s) for ', linkedUserId);
+                parents.forEach(parent => {
+                    console.log('Parent ID:', parent.id);
+                });
+                console.log(parents);
                 return parents;
             }
 

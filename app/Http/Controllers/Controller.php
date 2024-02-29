@@ -16,9 +16,11 @@ class Controller extends BaseController
 
     public function getBirthdays(ProfileService $profileService)
     {
+        
+
         $user = Auth::user()->id; // Get the logged-in user
         $controllerResponseBirthdays = $profileService->getConnectedUserBirthdays($user);
-        return response($controllerResponseBirthdays);
+        return response()->json($controllerResponseBirthdays);
     }
 
 }

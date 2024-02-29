@@ -30,7 +30,8 @@ class ProfileService
             return [
                 'id' => $data->id,
                 'dateBirth' => $data->dateBirth,
-                'Name' => $data->Name
+                'Name' => $data->Name,
+                'daysInMonth' => $data->daysInMonth,
             ];
         }, $rawBirthdays);
 

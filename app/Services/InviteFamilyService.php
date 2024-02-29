@@ -11,7 +11,11 @@ use App\Http\Requests\InviteFamilyRequest;
 
 class InviteFamilyService
 {
-    public function createSymbolicUser(array $newSymUser)
+
+    /**
+     * If $linkToId is null, the link will be created direct to authenticated user
+     */
+    public function createSymbolicUser(array $newSymUser, ?int $linkToId)
     {
         $newUserId = User::insertGetId([
             "name" => $newSymUser["inviteNameFirst"] . " " . $newSymUser["inviteNameLast"],
@@ -25,15 +29,18 @@ class InviteFamilyService
             'genderId' => '9',
             'isRegistered' => false // Key - Denotes this is a symbolic user
         ]);
-        $this->createUserLinx(auth()->user()->id, $newUserId, $newSymUser['inviteRelationshipId']);
-    }
 
+        $userIdLink1 = $linkToId ?: auth()->user()->id;
+
+        $this->createUserLinx($userIdLink1, $newUserId, $newSymUser['inviteRelationshipId']);
+    }
 
     /**
      * Authenticated User, New User, User relationship Id
      */
     public function createUserLinx(int $AuthUser1, int $newUser, int $relationshipId)
     {
+
         $relationship = Relationship::find($relationshipId);
         Link::create([
             'user_id_1' => $AuthUser1,

@@ -36,11 +36,17 @@ Route::middleware('auth')->group(function () {
     Route::get('/invite-family', [InviteFamilyController::class, 'getInviteForm'])->name('invite-family');
     Route::patch('/invite/family', [InviteFamilyController::class, 'postSendInvite'])->name('invite-family.send');
     Route::get('/family-tree', [FamilyTreeController::class, 'getFamilyTree'])->name('family-tree');
+    Route::post('/family-tree/add-member', [FamilyTreeController::class, 'postAddFamilyTreeMember']);
     Route::get('/go-family-tree', [FamilyTreeController::class, 'getGoJsFamilyTree'])->name('go-family-tree');
 });
 
 Route::patch('/profile/photo', [ProfilePhotoController::class, 'update'])->name('profile.photo');
 
 Route::get('/birthdays', [Controller::class, 'getBirthdays'])->middleware('auth');
+
+Route::get('/get-relationships', [FamilyTreeController::class, 'getRelationships']);
+
+
+
 
 require __DIR__ . '/auth.php';

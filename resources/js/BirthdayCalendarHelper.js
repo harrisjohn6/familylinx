@@ -45,21 +45,20 @@ if (calendarContainer) {
     );
     // Function to Build the Calendar Grid
     function buildCalendar(birthdaysByDay) {
-        const month = 2; // Example: November
+        const month = 2;
         const year = 2024;
         const daysInMonth = new Date(year, month + 1, 0).getDate();
 
         diagram.model = new go.GraphLinksModel();
         diagram.model.nodeDataArray = [];
-        console.log("nodeDataArray: ", diagram.model.nodeDataArray);
         for (let i = 1; i <= daysInMonth; i++) {
-            const dateKey = ("0" + month).slice(-2) + "-" + ("0" + i).slice(-2); // MM-DD format
+            const dateKey = ("0" + i).slice(-2); // Ensure leading zero
             diagram.model.addNodeData({
-                key: i, // Key to identify 'day' node
+                key: dateKey, // Use the zero-padded string
                 birthdayData: birthdaysByDay[dateKey] || [],
             });
         }
-        diagram.layout = new go.GridLayout(); // Add this for automatic layout of days as a grid
+        diagram.layout = new go.GridLayout();
     }
     fetch("/sanctum/csrf-cookie").then(() => {
         fetch("/birthdays", {
@@ -77,17 +76,16 @@ if (calendarContainer) {
                 return response.json(); // Return the promise for chaining
             })
             .then((birthdayData) => {
-                // Use 'birthdayData' here for clarity
                 const birthdaysByDay = {};
                 birthdayData.forEach((birthday) => {
                     const date = birthday.dateBirth.substring(5);
+
                     if (!birthdaysByDay[date]) {
                         birthdaysByDay[date] = [];
                     }
                     birthdaysByDay[date].push(birthday);
-                    console.log("birthday: ", birthday);
                 });
-                console.log("birthdaysByDay: ", birthdaysByDay);
+                // console.log(birthdayData);
                 buildCalendar(birthdaysByDay);
             })
             .catch((error) => {
