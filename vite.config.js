@@ -7,8 +7,7 @@ export default defineConfig({
             input: [
                 "resources/css/app.css",
                 "resources/js/app.js",
-                "resources/js/BirthdayCalendarHelper.js",
-                "resources/js/FamilyTreeHelper.js",
+                "resources/js/app.blade.js"
             ],
 
             refresh: true,

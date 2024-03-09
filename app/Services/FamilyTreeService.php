@@ -3,6 +3,7 @@
 namespace App\Services;
 
 use App\Models\Link;
+use Illuminate\Support\Facades\DB;
 use Illuminate\Foundation\Auth\User;
 
 class FamilyTreeService
@@ -41,7 +42,9 @@ class FamilyTreeService
                 $nodes[] = [
                     'id' => $linkedUser->id,
                     'label' => $linkedUser->nameFirst . ' ' . $linkedUser->nameLast,
-                    'image' => url('/storage' . $linkedUser->profilePhoto)
+                    'image' => url('/storage' . $linkedUser->profilePhoto),
+                    'posX' => null,
+                    'posY' => null,
                 ];
             }
 
@@ -98,22 +101,33 @@ class FamilyTreeService
                 // Revised duplicate check
                 $edgeExists = false;
                 foreach ($edges as $existingEdge) {
-                    if ($existingEdge['from'] === $userId1 && $existingEdge['to'] === $userId2) {
+                    if (
+                        ($existingEdge['from'] === $userId1 && $existingEdge['to'] === $userId2) ||
+                        ($existingEdge['from'] === $userId2 && $existingEdge['to'] === $userId1)
+                    ) {
                         $edgeExists = true;
                         break;
                     }
                 }
-
                 if (!$edgeExists) {
+
+                    // Determine parent-child relationship (if applicable)
+                    $parent = null;
+                    $child = null;
+                    if ($connection->isParent) {
+                        $parent = $connection->user_id_2; // Parent is in user_id_2 column
+                        $child = $connection->user_id_1;
+                    }
+
+                    // Create the edge
                     $edges[] = [
-                        'from' => $userId1, // Smaller ID is always 'from'
-                        'to' => $userId2,
+                        'from' => $child ?? $userId1, // Child or smaller ID
+                        'to' => $parent ?? $userId2,  // Parent or larger ID
                         'label' => $connection->relationship->relationship_title,
                         'isSibling' => $connection->isSibling,
                         'isParent' => $connection->isParent
                     ];
                 }
-
                 // Recursion
                 $otherUser = User::find($userId1 === $user->id ? $userId2 : $userId1);
                 getExpandedConnections($otherUser, $edges, $visitedNodes, $depth + 1, $maxDepth);
@@ -122,11 +136,47 @@ class FamilyTreeService
 
         // Start the recursion
         getExpandedConnections($user, $edges, $visitedNodes);
-        
+
         return $edges;
     }
 
 
+    public function getClusters($nodeId)
+    {
+        $parentNodesString = DB::table('viewparentchildlinx')
+            ->select('ParentNodes')
+            ->where('childNode', $nodeId)
+            ->value('ParentNodes');
 
+        if ($parentNodesString) {
+            $parentNodes = explode(',', $parentNodesString);
+
+            // Ensure we have a valid cluster (more than one parent)
+            if (count($parentNodes) > 1) {
+                $clusterId = implode('-', $parentNodes); // Create cluster ID
+
+                return [
+                    'id' => $clusterId,
+                    'physics' => false,
+                    'nodes' => $parentNodes,
+                    // 'childNode' => $nodeId,
+                ];
+            } else {
+                return null; // Indicate an invalid single-node cluster
+            }
+        } else {
+            return null; // Return null if no parents are found
+        }
+    }
+
+    private function createCluster($parentNodes)
+    {
+        $clusterId = implode('-', $parentNodes); // Generate ID from parent nodes
+
+        return [
+            'id' => $clusterId,
+            'nodes' => $parentNodes
+        ];
+    }
 
 }

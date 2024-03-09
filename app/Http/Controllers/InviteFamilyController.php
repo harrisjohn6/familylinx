@@ -39,16 +39,21 @@ class InviteFamilyController extends Controller
 
     public function postSendInvite(InviteFamilyRequest $request, InviteFamilyService $inviteFamilyService)
     {
-        $validatedData = $request->validated();
-        $inviteFamilyService->createSymbolicUser($validatedData);
+        $authUser = Auth::user();
         $nodes = [];
         $edges = [];
 
-        $nodes = $this->familyTreeService->buildFamilyTreeNodes(Auth::user());
-        $edges = $this->familyTreeService->buildFamilyTreeEdges(Auth::user());
-        return view('family-tree', compact('nodes', 'edges'));
+        $validatedData = $request->validated();
 
+        $inviteFamilyService->createSymbolicUser($validatedData);
+
+        $nodes = $this->familyTreeService->buildFamilyTreeNodes($authUser);
+        $edges = $this->familyTreeService->buildFamilyTreeEdges($authUser);
+        $clusters = $this->familyTreeService->getClusters($authUser);
+        return view('family-tree', compact('nodes', 'edges'));
         // return back()->with('success', 'Invitation sent successfully!');
+
     }
+
     /** END CONTROLLER POST METHODS */
 }

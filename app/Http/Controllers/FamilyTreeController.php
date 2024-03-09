@@ -25,7 +25,19 @@ class FamilyTreeController extends Controller
     {
         $nodes = $this->familyTreeService->buildFamilyTreeNodes(Auth()->user());
         $edges = $this->familyTreeService->buildFamilyTreeEdges(Auth()->user());
-        return view('family-tree', compact('nodes', 'edges'));
+
+        $clusters = []; // Initialize an array to store clusters
+
+        foreach ($nodes as $node) {
+            $cluster = $this->familyTreeService->getClusters($node['id']);
+
+            if ($cluster) { // Add the cluster if it's not empty
+                $clusters[] = $cluster;
+            }
+        }
+        $clusters = array_filter($clusters);
+
+        return view('family-tree', compact('nodes', 'edges', 'clusters'));
 
     }
     public function getGoJsFamilyTree()

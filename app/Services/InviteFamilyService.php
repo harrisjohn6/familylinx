@@ -15,7 +15,7 @@ class InviteFamilyService
     /**
      * If $linkToId is null, the link will be created direct to authenticated user
      */
-    public function createSymbolicUser(array $newSymUser, ?int $linkToId)
+    public function createSymbolicUser(array $newSymUser)
     {
         $newUserId = User::insertGetId([
             "name" => $newSymUser["inviteNameFirst"] . " " . $newSymUser["inviteNameLast"],
@@ -30,7 +30,7 @@ class InviteFamilyService
             'isRegistered' => false // Key - Denotes this is a symbolic user
         ]);
 
-        $userIdLink1 = $linkToId ?: auth()->user()->id;
+        $userIdLink1 = $newSymUser["addedFromFamilyId"];
 
         $this->createUserLinx($userIdLink1, $newUserId, $newSymUser['inviteRelationshipId']);
     }
@@ -38,13 +38,21 @@ class InviteFamilyService
     /**
      * Authenticated User, New User, User relationship Id
      */
-    public function createUserLinx(int $AuthUser1, int $newUser, int $relationshipId)
+    public function createUserLinx(int $userExisting, int $userNew, int $relationshipId)
     {
 
+
         $relationship = Relationship::find($relationshipId);
+        if ($relationship->isParent || $relationship->relationship_title != 'Child') {
+            $position2 = $userNew;
+            $position1 = $userExisting;
+        } else {
+            $position1 = $userNew;
+            $position2 = $userExisting;
+        }
         Link::create([
-            'user_id_1' => $AuthUser1,
-            'user_id_2' => $newUser,
+            'user_id_1' => $position1,
+            'user_id_2' => $position2,
             'is_biological' => '1',
             'relationship_type_id' => $relationshipId,
             'isSibling' => $relationship->isSibling,

@@ -16,6 +16,7 @@
             @csrf
             @method('patch')
 
+            <input type="hidden" name="addedFromFamilyId" value={{ auth()->user()->id }}>
 
             <div>
                 <x-input-label for="inviteEmail" :value="__('Email')" />
