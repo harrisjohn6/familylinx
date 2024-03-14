@@ -49,7 +49,7 @@
 
             var options = {
                 configure: {
-                    enabled: true,
+                    enabled: false,
                     filter: 'nodes,edges',
                     container: familyTree,
                     showButton: true
@@ -345,13 +345,10 @@
                 if (params.nodes.length > 0) {
                     var nodeId = params.nodes[0];
                     var nodeLabel = nodes.get(nodeId).label; // Get node label
-                    console.log('clickedNodeId:', nodeId)
                     contextMenu.style.display = 'block';
-                    contextMenu.textContent = nodeLabel;
+                    // contextMenu.textContent = nodeLabel;
                     contextMenu.style.left = params.pointer.DOM.x + 'px';
                     contextMenu.style.top = params.pointer.DOM.y + 'px';
-                    console.log("Menu position:", contextMenu.style.left, contextMenu.style.top);
-                    console.log("Menu display:", contextMenu.style.display);
                 } else {
                     contextMenu.style.display = 'none'; // Hide if not a node click
                 }

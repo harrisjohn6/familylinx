@@ -20,17 +20,14 @@
                         {{ __('Family Tree') }}
                     </x-nav-link>
 
-                    <x-nav-link :href="route('go-family-tree')" :active="request()->routeIs('go-family-tree')">
-                        {{ __('Go Family Tree') }}
+                    <x-nav-link>
+                        {{ __('Something Here') }}
                     </x-nav-link>
 
                     <x-nav-link :href="route('invite-family')" :active="request()->routeIs('invite-family')">
                         {{ __('Invite Family') }}
                     </x-nav-link>
                 </div>
-
-
-
 
                 <!-- Settings Dropdown -->
                 <div class="hidden sm:flex sm:items-center sm:ms-6">

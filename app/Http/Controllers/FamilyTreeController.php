@@ -38,7 +38,6 @@ class FamilyTreeController extends Controller
         $clusters = array_filter($clusters);
 
         return view('family-tree', compact('nodes', 'edges', 'clusters'));
-
     }
     public function getGoJsFamilyTree()
     {
