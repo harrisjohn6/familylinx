@@ -67,7 +67,7 @@
                 @foreach ($genders as $gender)
                     <option value="{{ $gender->gender_id }}"
                         {{ $user->genderId == $gender->gender_id ? 'selected' : '' }}>
-                        {{ $gender->gender_identity }}
+                        {{ $gender->gender }}
                     </option>
                 @endforeach
             </select>

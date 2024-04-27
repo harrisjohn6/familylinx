@@ -42,7 +42,7 @@ class RelationshipsTableSeeder extends Seeder
         // Update parent_flag for specific titles
         DB::table('relationships')
             ->whereIn('relationship_title', ['Parent', 'Step-Parent', 'Adoptive Parent', 'Foster Parent'])
-            ->update(['parent_flag' => 1]);
+            ->update(['isParent' => 1]);
 
         // Update includes_step for specific titles
         DB::table('relationships')

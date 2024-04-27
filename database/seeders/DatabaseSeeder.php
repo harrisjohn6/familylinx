@@ -1,6 +1,7 @@
 <?php
 namespace Database\Seeders;
 
+use Database\Seeds\GendersTableSeeder;
 use Database\Seeds\RelationshipsTableSeeder;
 use Illuminate\Database\Seeder;
 
@@ -16,7 +17,9 @@ class DatabaseSeeder extends Seeder
     public function run()
     {
 
-        //$this->call([GendersTableSeeder::class,""]);
-        $this->call([RelationshipsTableSeeder::class, ""]);
+       $this->call([GendersTableSeeder::class, ""]);
+
+       $this->call([RelationshipsTableSeeder::class, ""]);
+
     }
 }

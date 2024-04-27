@@ -18,26 +18,28 @@ class User extends Authenticatable
      * @var array<int, string>
      */
     protected $fillable = [
-        'nameFirst',
-        'nameMiddle',
-        'nameLast',
-        'email',
-        'password',
-        'dateBirth',
-        'genderId',
-        'biologicalSex',
         'addressLine1',
         'addressLine2',
+        'biologicalSex',
         'city',
-        'state',
-        'zip',
+        'dateBirth',
+        'email',
+        'email_verified_at',
+        'genderId',
+        'isRegistered',
+        'name',
+        'nameFirst',
+        'nameLast',
+        'nameMiddle',
+        'namePrefix',
+        'nameSuffix',
+        'password',
         'phoneNumber',
         'phoneType',
         'profilePhoto',
-        'isRegistered',
-        'prefix',
-        'suffix',
-
+        'remember_token',
+        'state',
+        'zip',
     ];
 
     /**
@@ -68,10 +70,5 @@ class User extends Authenticatable
     public function links()
     {
         return $this->hasMany(Link::class);
-    }
-
-    public function createSymUser($symUser)
-    {
-
     }
 }

@@ -26,7 +26,7 @@ class InviteFamilyService
             'dateBirth' => $newSymUser['inviteDateBirth'],
             'biologicalSex' => $newSymUser['inviteBiologicalSex'],
             'password' => Hash::make(Str::random(50)),
-            'genderId' => '9',
+            'genderId' => '27',
             'isRegistered' => false // Key - Denotes this is a symbolic user
         ]);
 
